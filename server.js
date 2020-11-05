@@ -3,9 +3,16 @@
 // Body-parser: parse object
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 // Create an app using this framework
 const app = express();
+
+var corsOptions = {
+  origin: "http://localhost:8081"
+};
+
+app.use(cors(corsOptions));
 
 // Parse requests of content-type: application/json
 app.use(bodyParser.json());
@@ -21,6 +28,7 @@ app.get("/", (req, res) => {
 require("./app/routes/customer.routes.js")(app);
 
 // Set port, listen for requests
-app.listen(3000, () => {
-  console.log("Server is running on port 3000.");
+const PORT = process.env.PORT || 8081;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
 });
